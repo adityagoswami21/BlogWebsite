@@ -1,7 +1,7 @@
 from datetime import date
 import os
 from dotenv import load_dotenv
-from flask import Flask, abort, render_template, redirect, url_for, flash
+from flask import Flask, abort, render_template, redirect, request, url_for, flash
 from flask_bootstrap import Bootstrap5
 from flask_ckeditor import CKEditor
 from flask_gravatar import Gravatar
@@ -144,9 +144,14 @@ def logout():
 
 @app.route('/')
 def get_all_posts():
-    result = db.session.execute(db.select(BlogPost))
+    show_all = request.args.get('show_all', 'false').lower() == 'true'
+
+    if show_all:
+        result = db.session.execute(db.select(BlogPost).order_by(BlogPost.date.desc()))
+    else:
+        result = db.session.execute(db.select(BlogPost).order_by(BlogPost.date.desc()).limit(2))
     posts = result.scalars().all()
-    return render_template("index.html", all_posts=posts, current_user=current_user)
+    return render_template("index.html", all_posts=posts, current_user=current_user, show_all=show_all)
 
 
 # Allow logged-in users to comment on posts

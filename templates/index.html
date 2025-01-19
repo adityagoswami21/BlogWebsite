@@ -54,7 +54,11 @@
       {% endif %}
       <!-- Pager-->
       <div class="d-flex justify-content-end mb-4">
-        <a class="btn btn-secondary text-uppercase" href="#!">Older Posts →</a>
+        {% if show_all %}
+        <a class="btn btn-secondary text-uppercase" href="{{ url_for('get_all_posts') }}">Show Latest Posts →</a>
+        {% else %}
+        <a class="btn btn-secondary text-uppercase" href="{{ url_for('get_all_posts', show_all='true') }}">Older Posts →</a>
+        {% endif %}
       </div>
     </div>
   </div>
