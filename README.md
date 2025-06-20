@@ -22,5 +22,4 @@ A simple and elegant blog website built using **Flask**, **SQLAlchemy**, and **B
 - Gunicorn (for deployment)
 - Dotenv (for environment config)
 
-## Website Preview
 
